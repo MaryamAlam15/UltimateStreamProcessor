@@ -4,12 +4,12 @@ This app is to demonstrate the way we could process live stream data (example: T
 It also merges tweets with total coronavirus cases as displayed on [worldometers](https://www.worldometers.info/coronavirus/).
 
 ### How it works:
-- The app reads the live tweets from Twitter Stream via socket and buffers them upto 15mins.
+- The app reads the live tweets from Twitter Stream via socket and buffers them upto 15 secs.
 - After fetching the tweets, it then cleans them. i.e remove '#', 'RT:' and any urls included.
-- The app also fethes the total coronavirus cases as mentioned on [worldometers](https://www.worldometers.info/coronavirus/).
-- cleaned tweets are merged with coronavirus total cases along with the timestamp.
+- The app also fetches the total coronavirus cases as mentioned on [worldometers](https://www.worldometers.info/coronavirus/).
+- Cleaned tweets are merged with coronavirus total cases along with the timestamp.
 
-#### An Example of final record:
+#### An Example of processed record:
 ~~~
 {
    "_id":"ObjectId(""6053dfa3c99e3f43208409da"")",
@@ -34,7 +34,7 @@ It also merges tweets with total coronavirus cases as displayed on [worldometers
  
 ### How to run:
 The app is dockerized and can be build as:
-> docker compose-up --build
+> docker-compose up --build
 
 If you just want to run:
-> docker compose-up
+> docker-compose up
