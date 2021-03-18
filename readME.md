@@ -4,7 +4,7 @@ This app is to demonstrate the way we could process live stream data (example: T
 It also merges tweets with total coronavirus cases as displayed on [worldometers](https://www.worldometers.info/coronavirus/).
 
 ### How it works:
-- The app reads the live tweets from Twitter Stream via socket and buffers them upto 15 secs.
+- The app reads the live tweets from Twitter Stream via socket and buffers them upto 20 secs.
 - After fetching the tweets, it then cleans them. i.e remove '#', 'RT:' and any urls included.
 - The app also fetches the total coronavirus cases as mentioned on [worldometers](https://www.worldometers.info/coronavirus/).
 - Cleaned tweets are merged with coronavirus total cases along with the timestamp.
