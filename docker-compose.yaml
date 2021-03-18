@@ -20,9 +20,9 @@ services:
   twitter-simulator:
     image: python:3.8-buster
     volumes:
-    - .:/t_simulator/
+      - .:/t_simulator/
     ports:
-    - "5555:5555"
+      - "5555:5555"
     hostname: twitter
     command: python3 /t_simulator/twitter_stream_simulator.py
     networks:
@@ -32,7 +32,10 @@ services:
     build: .
     depends_on:
       - twitter-simulator
+      - mongodb
     links:
       - mongodb:mongodb
+    volumes:
+      - .:/ultimate_streaming
     networks:
       - app-tier
