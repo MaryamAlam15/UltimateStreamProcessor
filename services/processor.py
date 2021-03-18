@@ -49,7 +49,7 @@ class Processor:
     def clean_tweet(self, value):
         # eliminate '#', 'RT:' or any url.
         regex_to_clean = r'(#|RT:|(http|https):+[^\s]+[\w])'
-        cleaned_value = re.sub(regex_to_clean, '', value)
+        cleaned_value = re.sub(regex_to_clean, '', value).strip()
         return cleaned_value
 
     def write_data_to_mongo(self, df):

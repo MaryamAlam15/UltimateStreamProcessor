@@ -22,8 +22,7 @@ class WorldoMetersScrapper:
         """
         finds div by css which shows total covid cases and returns its text.
         """
-        text = soup.find('div', class_=self.case_counter_class_css).text
-        print(text)
+        text = soup.find('div', class_=self.case_counter_class_css).text.strip()
         return text
 
     def scrap_latest_cases(self):
