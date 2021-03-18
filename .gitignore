@@ -1,0 +1,14 @@
+.idea
+.pyc
+/data/
+/checkpoint/*
+/state/*
+/offsets/*
+/commits/*
+/metadata
+/output.json/*
+/output/
+config/__pycache__/
+.delta
+.snapshot
+*.iml

@@ -1,0 +1,38 @@
+version: '3.8'
+
+networks:
+  app-tier:
+    driver: bridge
+
+services:
+  mongodb:
+    image: mongo:4.0.0
+    hostname: mongodb
+    container_name: mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data:/data
+    networks:
+      - app-tier
+
+  twitter-simulator:
+    image: python:3.8-buster
+    volumes:
+    - .:/t_simulator/
+    ports:
+    - "5555:5555"
+    hostname: twitter
+    command: python3 /t_simulator/twitter_stream_simulator.py
+    networks:
+      - app-tier
+
+  ultimate-streaming:
+    build: .
+    depends_on:
+      - twitter-simulator
+    links:
+      - mongodb:mongodb
+    networks:
+      - app-tier
