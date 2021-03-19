@@ -29,22 +29,25 @@ class Processor:
             # Get the singleton instance of SparkSession
             spark = getSparkSessionInstance(rdd.context.getConf())
 
-            # read tweet.
+            # convert tweet RDD to DF.
             tweets_dataframe = self.get_tweet_df(spark, rdd, time)
 
             # get total corona cases via scrapping.
             coronavirus_latest_cases = self.fetch_corona_cases()
 
             # merge the data.
-            processed_data = self.clean_and_merge_data(tweets_dataframe, coronavirus_latest_cases)
+            cleaned_data = self.clean_and_merge_data(tweets_dataframe, coronavirus_latest_cases)
+
+            # aggregate data.
+            aggregated_data = self.aggregate_data(cleaned_data)
 
             # write to mongo DB.
-            self.write_data_to_mongo(processed_data)
+            self.write_data_to_mongo(aggregated_data)
 
         except Exception as e:
             logging.exception(e)
 
-    ####################### helper method #####################################
+    ####################### helper methods #####################################
 
     def clean_tweet(self, value):
         # eliminate '#', 'RT:' or any url.
@@ -86,9 +89,10 @@ class Processor:
         clean_tweet_udf = udf(self.clean_tweet, StringType())
         tweets_dataframe = tweets_dataframe.withColumn('cleaned_tweet', clean_tweet_udf(col('tweet_text')))
 
-        merged_df = tweets_dataframe.withColumn('total_case_count', lit(coronavirus_latest_cases))
+        return tweets_dataframe.withColumn('total_case_count', lit(coronavirus_latest_cases))
 
-        return merged_df \
+    def aggregate_data(self, df):
+        return df \
             .select('*') \
             .groupBy('time_stamp', 'total_case_count') \
             .agg(collect_list('cleaned_tweet').alias('content'))
