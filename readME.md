@@ -28,9 +28,10 @@ It also merges tweets with total coronavirus cases as displayed on [worldometers
 ~~~
 
 #### TechStack:
- - python3.8
- - Pyspark
- - Mongo DB
+ - python3.8.
+ - Spark (pyspark).
+ - Mongo DB.
+ - Java 1.11.
  
 ### How to run:
 The app is dockerized and can be build as:
@@ -38,3 +39,16 @@ The app is dockerized and can be build as:
 
 If you just want to run:
 > docker-compose up
+
+### To view the data in Mongo DB:
+Login to mongodb docker: 
+> docker exec it mongodb bash
+
+On docker terminal, open mongo client:
+> mongo
+
+Select db:
+> use ultimate_db
+
+Query collection:
+> db.tweets.find()
